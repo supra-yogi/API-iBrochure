@@ -42,7 +42,7 @@ class ListBrochure extends REST_Controller {
         // fclose($file);
         
         $data = ARRAY(
-            'Name'        => $this->POST('Name'),
+            'Title'       => $this->POST('Title'),
             'ListPicture' => $this->POST('ListPicture'),
             'Telp'        => $this->POST('Telp'),
             'Address'     => $this->POST('Address'),
@@ -71,14 +71,14 @@ class ListBrochure extends REST_Controller {
         }
 
         $update = ARRAY(
-                'Name'        => $this->POST('Name'),
-                'PictureCode' => $this->POST('PictureCode'),
-                'PictureName' => $this->POST('PictureName'),
-                'Telp'        => $this->POST('Telp'),
-                'Address'     => $this->POST('Address'),
-                'Description' => $this->POST('Description'),
-                'CustomerId'  => $this->POST('CustomerId'),
-                'CategoryId'  => $this->POST('CategoryId'));
+            'Title'       => $this->POST('Title'),
+            'ListPicture' => $this->POST('ListPicture'),
+            'Telp'        => $this->POST('Telp'),
+            'Address'     => $this->POST('Address'),
+            'Description' => $this->POST('Description'),
+            'CustomerId'  => $this->POST('CustomerId'),
+            'CategoryId'  => $this->POST('CategoryId'));
+        
         $this->ListBrochureModel->Save($id, $data);
               
         if ($update) {

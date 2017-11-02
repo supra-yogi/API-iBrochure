@@ -18,7 +18,7 @@ class ListBrochureModel extends CI_Model {
 
     public function Save($id, $param) {
         $id          = $this->db->escape_str($id);
-        $name        = $this->db->escape_str($param['Name']);
+        $title        = $this->db->escape_str($param['Title']);
         $telp        = $this->db->escape_str($param['Telp']);
         $address     = $this->db->escape_str($param['Address']);
         $description = $this->db->escape_str($param['Description']);
@@ -40,7 +40,7 @@ class ListBrochureModel extends CI_Model {
             
         } else {
             $this->db->query("UPDATE list_brochure 
-                SET Name = '$name',
+                SET Title = '$title',
                     Telp = '$telp',
                     Address = '$address'
                     Description = '$description'
