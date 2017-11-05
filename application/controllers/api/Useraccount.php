@@ -34,8 +34,7 @@ class Useraccount extends REST_Controller {
         $data = ARRAY(
                 'Username'   => $this->POST('Username'),
                 'Email'      => $this->POST('Email'),
-                'Password'   => $password,
-                'CustomerId' => $this->POST('CustomerId'));
+                'Password'   => $password);
         $this->UseraccountModel->Save(0, $data);
         $this->response($data, REST_Controller::HTTP_CREATED);        
     }

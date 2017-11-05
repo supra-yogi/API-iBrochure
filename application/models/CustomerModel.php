@@ -14,11 +14,12 @@ class CustomerModel extends CI_Model {
     }
 
     public function Save($id, $param) {
-        $id      = $this->db->escape_str($id);
-        $name    = $this->db->escape_str($param['Name']);
-        $contact = $this->db->escape_str($param['Contact']);
-        $telp    = $this->db->escape_str($param['Telp']);
-        $address = $this->db->escape_str($param['Address']);
+        $id           = $this->db->escape_str($id);
+        $name         = $this->db->escape_str($param['Name']);
+        $contact      = $this->db->escape_str($param['Contact']);
+        $telp         = $this->db->escape_str($param['Telp']);
+        $address      = $this->db->escape_str($param['Address']);
+        $seraccountId = $this->db->escape_str($param['UseraccountId']);
 
         if ($id == 0) {
             $query = $this->db->insert("customer", $param);

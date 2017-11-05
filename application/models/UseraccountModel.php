@@ -18,7 +18,6 @@ class UseraccountModel extends CI_Model {
         $username   = $this->db->escape_str($param['Username']);
         $email      = $this->db->escape_str($param['Email']);
         $password   = $this->db->escape_str($param['Password']);
-        $customerId = $this->db->escape_str($param['CustomerId']);
 
         if ($id == 0) {
             $query = $this->db->insert("user_account", $param);
@@ -26,8 +25,7 @@ class UseraccountModel extends CI_Model {
             $query = $this->db->query("UPDATE user_account 
                 SET Username = '$username',
                     Email = '$email',
-                    Password = '$password',
-                    CustomerId = '$customerId'
+                    Password = '$password'
                 WHERE Id = $id");
         }
     }

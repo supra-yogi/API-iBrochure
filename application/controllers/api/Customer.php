@@ -31,11 +31,12 @@ class Customer extends REST_Controller {
     // api/customer [POST]
     public function index_post() {
         $data = ARRAY(
-                'Name'    => $this->POST('Name'),
-                'Contact' => $this->POST('Contact'),
-                'Telp'    => $this->POST('Telp'),
-                'Address' => $this->POST('Address'),
-                'RoleId'  => 2); //sebagai customer
+                'Name'          => $this->POST('Name'),
+                'Contact'       => $this->POST('Contact'),
+                'Telp'          => $this->POST('Telp'),
+                'Address'       => $this->POST('Address'),
+                'UseraccountId' => $this->POST('UseraccountId'),
+                'RoleId'        => 2); //sebagai customer
         $this->CustomerModel->Save(0, $data);
         $this->response($data, REST_Controller::HTTP_CREATED);        
     }
