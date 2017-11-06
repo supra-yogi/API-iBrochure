@@ -7,6 +7,16 @@ class UseraccountModel extends CI_Model {
         return $query->result();
     }
 
+    public function GetByUsername($username) {
+        $query =  $this->db->query("SELECT * FROM user_account WHERE Username = '$username'");
+        return $query->result();
+    }
+
+    public function GetByEmail($email) {
+        $query =  $this->db->query("SELECT * FROM user_account WHERE Email = '$email'");
+        return $query->result();
+    }
+
     public function GetById($id) {
         $id    = $this->db->escape_str($id);
         $query =  $this->db->query("SELECT * FROM user_account WHERE Id = $id");

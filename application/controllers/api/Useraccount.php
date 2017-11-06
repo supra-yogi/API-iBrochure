@@ -35,6 +35,22 @@ class Useraccount extends REST_Controller {
                 'Username'   => $this->POST('Username'),
                 'Email'      => $this->POST('Email'),
                 'Password'   => $password);
+
+        if ($this->UseraccountModel->GetByUsername($data['Username']) != null ) {
+            $data = ARRAY(
+                'Error' => REST_Controller::HTTP_NOT_FOUND,
+                'Message' => "Username ".$data['Username']." is already exist");
+            $this->response($data, REST_Controller::HTTP_NOT_FOUND);
+        }
+
+        if ($this->UseraccountModel->GetByEmail($data['Email']) != null ) {
+            $data = ARRAY(
+                'Error' => REST_Controller::HTTP_NOT_FOUND,
+                'Message' => "Email ".$data['Email']." is already exist");
+            $this->response($data, REST_Controller::HTTP_NOT_FOUND);
+        }
+
+
         $this->UseraccountModel->Save(0, $data);
         $this->response($data, REST_Controller::HTTP_CREATED);        
     }
@@ -89,13 +105,35 @@ class Useraccount extends REST_Controller {
 
     public function login_post() {
         $userOrEmail = $this->POST('UserOrEmail');
-        $password = $this->post('Password');
-        $password = hash("sha1", $password);
+        $password    = $this->post('Password');
+        $password    = hash("sha1", $password);
 
         if ($this->UseraccountModel->Login($userOrEmail, $password)) {
              $this->response(REST_Controller::HTTP_OK, REST_Controller::HTTP_OK);
         }
 
         $this->response(REST_Controller::HTTP_NOT_FOUND, REST_Controller::HTTP_NOT_FOUND);
+    }
+
+    public function getByUsername_post() {
+        $username = $this->post('Username');
+
+        $data = $this->UseraccountModel->GetByUsername($username);
+        if ($data == null) {
+            $this->response(REST_Controller::HTTP_NOT_FOUND, REST_Controller::HTTP_NOT_FOUND);
+        }
+
+         $this->response(REST_Controller::HTTP_OK, REST_Controller::HTTP_OK);
+    }
+
+    public function getByEmail_post() {
+        $email = $this->post('Email');
+
+        $data = $this->UseraccountModel->GetByEmail($email);
+        if ($data == null) {
+            $this->response(REST_Controller::HTTP_NOT_FOUND, REST_Controller::HTTP_NOT_FOUND);
+        }
+
+         $this->response(REST_Controller::HTTP_OK, REST_Controller::HTTP_OK);
     }
 }
