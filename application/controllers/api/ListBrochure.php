@@ -131,7 +131,7 @@ class ListBrochure extends REST_Controller {
         if ($result == null) {
             $data = ARRAY(
                 'Error'   => REST_Controller::HTTP_NOT_FOUND,
-                'Message' => 'No Data');
+                'Message' => 'No More Data');
             $this->response($data, REST_Controller::HTTP_NOT_FOUND);
         }
 
@@ -148,7 +148,7 @@ class ListBrochure extends REST_Controller {
         if ($result == null) {
             $data = ARRAY(
                 'Error'   => REST_Controller::HTTP_NOT_FOUND,
-                'Message' => 'No Data');
+                'Message' => 'No More Data');
             $this->response($data, REST_Controller::HTTP_NOT_FOUND);
         }
 
