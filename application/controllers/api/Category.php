@@ -18,7 +18,10 @@ class Category extends REST_Controller {
         if ($id != null) {
             $data = $this->CategoryModel->GetById($id);
             if ($data == null){
-                $this->response('Category Id = '.$id.' not found', REST_Controller::HTTP_NOT_FOUND);
+                $data = ARRAY(
+                'Error'   => REST_Controller::HTTP_NOT_FOUND,
+                'Message' => 'Category Id = '.$id.' not found');
+                $this->response($data, REST_Controller::HTTP_NOT_FOUND);
             }
             $this->response($data, REST_Controller::HTTP_OK);
         } else {
@@ -40,17 +43,23 @@ class Category extends REST_Controller {
     // UPDATE DATA
     // api/customer/id [PUT]
     public function index_put() {
-        $id = (int) $this->get('id');
+        $id = $this->PUT('Id');
 
         // Validate the id.
         if ($id <= 0)
         {
-            $this->response('{"status": "error"}', REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+            $data = ARRAY(
+                'Error'   => REST_Controller::HTTP_NOT_FOUND,
+                'Message' => 'Id must > 0');
+            $this->response($data, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
         $data = $this->CategoryModel->GetById($id);
         if ($data == null){
-            $this->response('Category Id = '.$id.' not found', REST_Controller::HTTP_NOT_FOUND);
+            $data = ARRAY(
+                'Error'   => REST_Controller::HTTP_NOT_FOUND,
+                'Message' => 'Category Id = '.$id.' not found');
+            $this->response($data, REST_Controller::HTTP_NOT_FOUND);
         }
 
         $update = ARRAY(
@@ -58,28 +67,33 @@ class Category extends REST_Controller {
                 'Name' => $this->PUT('Name'));
         $this->CategoryModel->Save($id, $update);
               
-        if ($update) {
-            $this->response($update, REST_Controller::HTTP_OK);  
-        } else {
-            $this->response('{"status": "error"}', REST_Controller::HTTP_BAD_REQUEST);
-        }
+        $this->response($update, REST_Controller::HTTP_OK);  
     }
 
     public function index_delete() {
-        $id = (int) $this->get('id');
+        $id = $this->get('id');
 
         // Validate the id.
         if ($id <= 0)
         {
-            $this->response('{"status": "error"}', REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+            $data = ARRAY(
+                'Error'   => REST_Controller::HTTP_NOT_FOUND,
+                'Message' => 'Id must > 0');
+            $this->response($data, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
         $data = $this->CategoryModel->GetById($id);
         if ($data == null){
-            $this->response('Category Id = '.$id.' not found', REST_Controller::HTTP_NOT_FOUND);
+            $data = ARRAY(
+                'Error'   => REST_Controller::HTTP_NOT_FOUND,
+                'Message' => 'Category Id = '.$id.' not found');
+            $this->response($data, REST_Controller::HTTP_NOT_FOUND);
         }
 
         $this->CategoryModel->Delete($id);
-        $this->response(REST_Controller::HTTP_NO_CONTENT, REST_Controller::HTTP_NO_CONTENT);
+
+        $data = ARRAY(
+                'Message' => 'Deleted');
+        $this->response($data, REST_Controller::HTTP_NO_CONTENT);
     }
 }

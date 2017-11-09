@@ -3,60 +3,40 @@
 class ListBrochureModel extends CI_Model {    
 
     public function GetAll() {
-        $query =  $this->db->query("SELECT * FROM list_brochure lb
-                                    LEFT JOIN list_brochure_picture lbp ON lbp.ListBrochureId = lb.Id");
+        $query =  $this->db->query("SELECT * FROM list_brochure lb");
         return $query->result();
     }
 
     public function GetById($id) {
         $id    = $this->db->escape_str($id);
         $query =  $this->db->query("SELECT * FROM list_brochure lb
-                                    LEFT JOIN list_brochure_picture lbp ON lbp.ListBrochureId = lb.Id 
                                     WHERE lb.Id = $id");
         return $query->result();
     }
 
     public function Save($id, $param) {
-        $id          = $this->db->escape_str($id);
-        $title        = $this->db->escape_str($param['Title']);
-        $telp        = $this->db->escape_str($param['Telp']);
-        $address     = $this->db->escape_str($param['Address']);
-        $description = $this->db->escape_str($param['Description']);
-        $customerId  = $this->db->escape_str($param['CustomerId']);
-        $categoryId  = $this->db->escape_str($param['CategoryId']);
-        $listPicture = $param['ListPicture'];
-
         if ($id == 0) {
             unset($param['ListPicture']);
             $query = $this->db->insert("list_brochure", $param);
-
-            foreach ($listPicture as $pictureItem) {
-                $pictureName   = $pictureItem['PictureName'];
-                $pictureBase64 = $pictureItem['PictureBase64'];
-
-                $this->db->query("INSERT INTO list_brochure_picture(PictureName, PictureBase64, ListBrochureId)
-                                        VALUES('$pictureName', '$pictureBase64', LAST_INSERT_ID())");
-            }
-            
         } else {
+            $id           = $this->db->escape_str($id);
+            $title        = $this->db->escape_str($param['Title']);
+            $telephone    = $this->db->escape_str($param['Telephone']);
+            $address      = $this->db->escape_str($param['Address']);
+            $description  = $this->db->escape_str($param['Description']);
+            $categoryId   = $this->db->escape_str($param['CategoryId']);
+            $pictureFront = $this->db->escape_str($param['PictureFront']);
+            $pictureBack  = $this->db->escape_str($param['PictureBack']);
+
             $this->db->query("UPDATE list_brochure 
                 SET Title = '$title',
                     Telp = '$telp',
-                    Address = '$address'
-                    Description = '$description'
-                    CustomerId = $customerId
-                    CategoryId = $categoryId
+                    Address = '$address',
+                    Description = '$description',
+                    CategoryId = $categoryId,
+                    PictureFront = $pictureFront,
+                    PictureBack = $pictureBack
                 WHERE Id = $id");
-
-            foreach ($listPicture as $pictureItem) {
-                $pictureName   = $pictureItem['PictureName'];
-                $pictureBase64 = $pictureItem['PictureBase64'];
-
-                $this->db->query("UPDATE list_brochure_picture 
-                    SET PictureName = '$pictureName',
-                        pictureBase64 = '$pictureBase64',
-                    WHERE Id = $id");
-            }
         }
     }
     
@@ -65,5 +45,28 @@ class ListBrochureModel extends CI_Model {
         
         $this->db>query("DELETE FROM list_brochure_picture WHERE ListBrochureId = $id");
         $this->db->query("DELETE FROM list_brochure WHERE Id = $id");
+    }
+
+    public function getListBrochureByPage($param) {
+        $page   = $this->db->escape_str($param['Page']);;
+        $size   = $this->db->escape_str($param['Size']);;
+        $page   = ($page - 1) * $size;
+        
+        $query = $this->db->query('SELECT * FROM list_brochure lb
+                                   LIMIT '.$page.', '.$size);
+        return $query->result();
+    }
+
+    public function getAllByUseraccountByPage($param) {
+        $id   = $this->db->escape_str($param['Id']);;
+        $page = $this->db->escape_str($param['Page']);;
+        $size = $this->db->escape_str($param['Size']);;
+        $page = ($page - 1) * $size;
+        
+        $query = $this->db->query('SELECT lb.* FROM list_brochure lb
+                                   RIGHT JOIN user_account u on u.id = lb.UseraccountId
+                                   WHERE u.Id = '.$id.
+                                   ' LIMIT '.$page.', '.$size);
+        return $query->result();
     }
 }

@@ -62,7 +62,6 @@ $route['api/example/users/(:num)'] = 'api/example/users/id/$1'; // Example 4
 $route['api/example/users/(:num)(\.)([a-zA-Z0-9_-]+)(.*)'] = 'api/example/users/id/$1/format/$3$4'; // Example 8
 
 //my routing
-$route['api/customer/(:num)']    = 'api/customer/index/id/$1';
 $route['api/category/(:num)']    = 'api/category/index/id/$1';
 $route['api/useraccount/(:num)'] = 'api/useraccount/index/id/$1';
 $route['api/listbrochure/(:num)'] = 'api/listbrochure/index/id/$1';

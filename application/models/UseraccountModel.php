@@ -25,17 +25,22 @@ class UseraccountModel extends CI_Model {
 
     public function Save($id, $param) {
         $id         = $this->db->escape_str($id);
-        $username   = $this->db->escape_str($param['Username']);
-        $email      = $this->db->escape_str($param['Email']);
-        $password   = $this->db->escape_str($param['Password']);
 
         if ($id == 0) {
             $query = $this->db->insert("user_account", $param);
         } else {
+            $name      = $this->db->escape_str($param['Name']);
+            $contact   = $this->db->escape_str($param['Contact']);
+            $telephone = $this->db->escape_str($param['Telephone']);
+            $address   = $this->db->escape_str($param['Address']);
+            $picture   = $this->db->escape_str($param['Picture']);
+
             $query = $this->db->query("UPDATE user_account 
-                SET Username = '$username',
-                    Email = '$email',
-                    Password = '$password'
+                SET Name = '$name',
+                    Contact = '$contact',
+                    Telephone = '$telephone',
+                    Address = '$address',
+                    Picture = '$picture'
                 WHERE Id = $id");
         }
     }
@@ -53,10 +58,6 @@ class UseraccountModel extends CI_Model {
         $query = $this->db->query("SELECT * FROM user_account 
             WHERE (Username = '$userOrEmail' OR Email = '$userOrEmail') AND Password = '$password'");
 
-        if ($query->num_rows() > 0) {
-            return true;
-        }
-
-        return false;
+        return $query->result();
     }
 }
