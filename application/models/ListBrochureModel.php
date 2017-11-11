@@ -3,7 +3,8 @@
 class ListBrochureModel extends CI_Model {    
 
     public function GetAll() {
-        $query =  $this->db->query("SELECT lb.*, c.Name as Category FROM list_brochure lb
+        $query =  $this->db->query("SELECT lb.*, c.Name as Category, u.Name as Username, u.Picture as Avatar FROM list_brochure lb
+                                    LEFT JOIN user_account u on u.id = lb.UseraccountId
                                     LEFT JOIN category c on c.Id = lb.CategoryId
                                     ORDER BY PostingDate DESC");
         return $query->result();
@@ -11,7 +12,8 @@ class ListBrochureModel extends CI_Model {
 
     public function GetById($id) {
         $id    = $this->db->escape_str($id);
-        $query =  $this->db->query("SELECT lb.*, c.Name as Category FROM list_brochure lb
+        $query =  $this->db->query("SELECT lb.*, c.Name as Category, u.Name as Username, u.Picture as Avatar FROM list_brochure lb
+                                    LEFT JOIN user_account u on u.id = lb.UseraccountId
                                     LEFT JOIN category c on c.Id = lb.CategoryId
                                     WHERE lb.Id = $id 
                                     ORDER BY PostingDate DESC");
@@ -46,8 +48,7 @@ class ListBrochureModel extends CI_Model {
     
     public function Delete($id) {
         $id = $this->db->escape_str($id);
-        
-        $this->db>query("DELETE FROM list_brochure_picture WHERE ListBrochureId = $id");
+            
         $this->db->query("DELETE FROM list_brochure WHERE Id = $id");
     }
 
@@ -56,7 +57,8 @@ class ListBrochureModel extends CI_Model {
         $size   = $this->db->escape_str($param['Size']);;
         $page   = ($page - 1) * $size;
         
-        $query = $this->db->query('SELECT lb.*, u.Id as UseraccountId, c.Name as Category FROM list_brochure lb
+        $query = $this->db->query('SELECT lb.*, u.Id as UseraccountId, u.Name as Username, u.Picture as Avatar, c.Name as Category 
+                                   FROM list_brochure lb
                                    LEFT JOIN user_account u ON u.id = lb.UseraccountId
                                    LEFT JOIN category c ON c.Id = lb.CategoryId 
                                    ORDER BY PostingDate DESC
@@ -70,7 +72,8 @@ class ListBrochureModel extends CI_Model {
         $size = $this->db->escape_str($param['Size']);;
         $page = ($page - 1) * $size;
         
-        $query = $this->db->query('SELECT lb.*, u.Id as UseraccountId, c.Name as Category FROM list_brochure lb
+        $query = $this->db->query('SELECT lb.*, u.Id as UseraccountId, u.Name as Username, u.Picture as Avatar, c.Name as Category 
+                                   FROM list_brochure lb
                                    RIGHT JOIN user_account u on u.Id = lb.UseraccountId
                                    LEFT JOIN category c ON c.Id = lb.CategoryId 
                                    WHERE u.Id = '.$id.
