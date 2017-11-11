@@ -3,14 +3,16 @@
 class ListBrochureModel extends CI_Model {    
 
     public function GetAll() {
-        $query =  $this->db->query("SELECT * FROM list_brochure lb
+        $query =  $this->db->query("SELECT lb.*, c.Name as Category FROM list_brochure lb
+                                    LEFT JOIN category c on c.Id = lb.CategoryId
                                     ORDER BY PostingDate DESC");
         return $query->result();
     }
 
     public function GetById($id) {
         $id    = $this->db->escape_str($id);
-        $query =  $this->db->query("SELECT * FROM list_brochure lb
+        $query =  $this->db->query("SELECT lb.*, c.Name as Category FROM list_brochure lb
+                                    LEFT JOIN category c on c.Id = lb.CategoryId
                                     WHERE lb.Id = $id 
                                     ORDER BY PostingDate DESC");
         return $query->result();
@@ -54,8 +56,9 @@ class ListBrochureModel extends CI_Model {
         $size   = $this->db->escape_str($param['Size']);;
         $page   = ($page - 1) * $size;
         
-        $query = $this->db->query('SELECT lb.*, u.Id as UseraccountId, u.Name FROM list_brochure lb
+        $query = $this->db->query('SELECT lb.*, u.Id as UseraccountId, c.Name as Category FROM list_brochure lb
                                    LEFT JOIN user_account u ON u.id = lb.UseraccountId
+                                   LEFT JOIN category c ON c.Id = lb.CategoryId 
                                    ORDER BY PostingDate DESC
                                    LIMIT '.$page.', '.$size);
         return $query->result();
@@ -67,8 +70,9 @@ class ListBrochureModel extends CI_Model {
         $size = $this->db->escape_str($param['Size']);;
         $page = ($page - 1) * $size;
         
-        $query = $this->db->query('SELECT lb.*, u.Id as UseraccountId, u.Name FROM list_brochure lb
-                                   RIGHT JOIN user_account u on u.id = lb.UseraccountId
+        $query = $this->db->query('SELECT lb.*, u.Id as UseraccountId, c.Name as Category FROM list_brochure lb
+                                   RIGHT JOIN user_account u on u.Id = lb.UseraccountId
+                                   LEFT JOIN category c ON c.Id = lb.CategoryId 
                                    WHERE u.Id = '.$id.
                                    ' ORDER BY PostingDate DESC'.
                                    ' LIMIT '.$page.', '.$size);
