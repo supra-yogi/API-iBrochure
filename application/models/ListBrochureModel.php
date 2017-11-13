@@ -36,12 +36,12 @@ class ListBrochureModel extends CI_Model {
 
             $this->db->query("UPDATE list_brochure 
                 SET Title = '$title',
-                    Telp = '$telp',
+                    Telephone = '$telephone',
                     Address = '$address',
                     Description = '$description',
-                    CategoryId = $categoryId,
-                    PictureFront = $pictureFront,
-                    PictureBack = $pictureBack
+                    CategoryId = '$categoryId',
+                    PictureFront = '$pictureFront',
+                    PictureBack = '$pictureBack'
                 WHERE Id = $id");
         }
     }

@@ -62,6 +62,7 @@ class ListBrochure extends REST_Controller {
     // UPDATE DATA
     // api/customer/id [PUT]
     public function index_put() {
+        header('Content-type : bitmap; charset=utf-8');
         $id = $this->PUT('Id');
 
         // Validate the id.
