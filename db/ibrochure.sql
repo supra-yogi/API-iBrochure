@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 16, 2017 at 09:52 AM
+-- Generation Time: Nov 17, 2017 at 10:21 AM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -19,6 +19,45 @@ SET time_zone = "+00:00";
 --
 -- Database: `ibrochure`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `category`
+--
+
+CREATE TABLE `category` (
+  `Id` int(11) NOT NULL,
+  `Code` varchar(10) NOT NULL,
+  `Name` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`Id`, `Code`, `Name`) VALUES
+(1, 'C1', 'Makanan'),
+(3, 'C2', 'Film');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `list_brochure`
+--
+
+CREATE TABLE `list_brochure` (
+  `Id` int(11) NOT NULL,
+  `Title` varchar(25) NOT NULL,
+  `PostingDate` datetime DEFAULT NULL,
+  `Telephone` varchar(25) DEFAULT NULL,
+  `Address` varchar(25) DEFAULT NULL,
+  `Description` varchar(255) DEFAULT NULL,
+  `PictureFront` mediumblob,
+  `PictureBack` mediumblob,
+  `UseraccountId` int(11) DEFAULT NULL,
+  `CategoryId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -51,6 +90,21 @@ INSERT INTO `user_account` (`Id`, `Username`, `Email`, `Password`, `Confirmed`, 
 --
 
 --
+-- Indexes for table `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`Id`),
+  ADD UNIQUE KEY `Code` (`Code`);
+
+--
+-- Indexes for table `list_brochure`
+--
+ALTER TABLE `list_brochure`
+  ADD PRIMARY KEY (`Id`),
+  ADD KEY `fk_list_brochure_categoryId` (`CategoryId`),
+  ADD KEY `fk_list_brochure_customerId` (`UseraccountId`);
+
+--
 -- Indexes for table `user_account`
 --
 ALTER TABLE `user_account`
@@ -63,10 +117,31 @@ ALTER TABLE `user_account`
 --
 
 --
+-- AUTO_INCREMENT for table `category`
+--
+ALTER TABLE `category`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `list_brochure`
+--
+ALTER TABLE `list_brochure`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `user_account`
 --
 ALTER TABLE `user_account`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `list_brochure`
+--
+ALTER TABLE `list_brochure`
+  ADD CONSTRAINT `fk_list_brochure_categoryId` FOREIGN KEY (`CategoryId`) REFERENCES `category` (`Id`),
+  ADD CONSTRAINT `fk_list_brochure_useraccountId` FOREIGN KEY (`UseraccountId`) REFERENCES `user_account` (`Id`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
