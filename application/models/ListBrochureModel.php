@@ -12,7 +12,8 @@ class ListBrochureModel extends CI_Model {
 
     public function GetById($id) {
         $id    = $this->db->escape_str($id);
-        $query =  $this->db->query("SELECT lb.*, c.Name as Category, u.Name as Username, u.Picture as Avatar FROM list_brochure lb
+        $query =  $this->db->query("SELECT lb.*, c.Name as Category, u.Name as Username, u.Picture as Avatar 
+                                    FROM list_brochure lb
                                     LEFT JOIN user_account u on u.id = lb.UseraccountId
                                     LEFT JOIN category c on c.Id = lb.CategoryId
                                     WHERE lb.Id = $id 
