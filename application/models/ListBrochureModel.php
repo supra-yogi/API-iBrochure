@@ -1,6 +1,6 @@
 <?php
 
-class ListBrochureModel extends CI_Model {    
+class ListbrochureModel extends CI_Model {    
 
     public function GetAll() {
         $query =  $this->db->query("SELECT lb.*, c.Name as Category, u.Name as Username, u.Picture as Avatar FROM list_brochure lb

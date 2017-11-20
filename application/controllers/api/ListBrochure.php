@@ -7,7 +7,7 @@ class Listbrochure extends REST_Controller {
  
     function __construct($config = 'rest') {
         parent::__construct($config);
-        $this->load->model('ListBrochureModel');
+        $this->load->model('ListbrochureModel');
     }
  
     // GET ALL DATA
