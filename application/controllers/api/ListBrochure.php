@@ -16,7 +16,7 @@ class Listbrochure extends REST_Controller {
     {
         $id = $this->get('id');
         if ($id != null) {
-            $data = $this->ListBrochureModel->GetById($id);
+            $data = $this->ListbrochureModel->GetById($id);
             if ($data == null){
                  $data = ARRAY(
                 'Error'   => REST_Controller::HTTP_NOT_FOUND,
@@ -25,7 +25,7 @@ class Listbrochure extends REST_Controller {
             }
             $this->response($data, REST_Controller::HTTP_OK);
         } else {
-            $data = $this->ListBrochureModel->GetAll();
+            $data = $this->ListbrochureModel->GetAll();
             $this->response($data, REST_Controller::HTTP_OK);
         }
     }
@@ -55,7 +55,7 @@ class Listbrochure extends REST_Controller {
             'PictureBack'   => $this->POST('PictureBack'),
             'CategoryId'    => $this->POST('CategoryId'));
 
-        $this->ListBrochureModel->Save(0, $data);
+        $this->ListbrochureModel->Save(0, $data);
         $this->response($data, REST_Controller::HTTP_CREATED);        
     }
 
@@ -74,7 +74,7 @@ class Listbrochure extends REST_Controller {
             $this->response($data, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $data = $this->ListBrochureModel->GetById($id);
+        $data = $this->ListbrochureModel->GetById($id);
         if ($data == null){
             $data = ARRAY(
                 'Error'   => REST_Controller::HTTP_NOT_FOUND,
@@ -91,7 +91,7 @@ class Listbrochure extends REST_Controller {
             'Description'  => $this->PUT('Description'),
             'CategoryId'   => $this->PUT('CategoryId'));
         
-        $this->ListBrochureModel->Save($id, $update);
+        $this->ListbrochureModel->Save($id, $update);
               
         $this->response($update, REST_Controller::HTTP_OK);  
     }
@@ -108,7 +108,7 @@ class Listbrochure extends REST_Controller {
             $this->response('{"status": "error"}', REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
-        $data = $this->ListBrochureModel->GetById($id);
+        $data = $this->ListbrochureModel->GetById($id);
         if ($data == null){
             $data = ARRAY(
                 'Error'   => REST_Controller::HTTP_NOT_FOUND,
@@ -116,7 +116,7 @@ class Listbrochure extends REST_Controller {
             $this->response($data, REST_Controller::HTTP_NOT_FOUND);
         }
 
-        $this->ListBrochureModel->Delete($id);
+        $this->ListbrochureModel->Delete($id);
 
         $data = ARRAY(
                 'Message' => 'Deleted');
@@ -128,7 +128,7 @@ class Listbrochure extends REST_Controller {
             'Page' => $this->POST('Page'),
             'Size' => $this->POST('Size'));
 
-        $result = $this->ListBrochureModel->getListBrochureByPage($data);
+        $result = $this->ListbrochureModel->getListBrochureByPage($data);
         if ($result == null) {
             $data = ARRAY(
                 'Error'   => REST_Controller::HTTP_NOT_FOUND,
@@ -145,7 +145,7 @@ class Listbrochure extends REST_Controller {
             'Page' => $this->POST('Page'),
             'Size' => $this->POST('Size'));
 
-        $result = $this->ListBrochureModel->getAllByUseraccountByPage($data);
+        $result = $this->ListbrochureModel->getAllByUseraccountByPage($data);
         if ($result == null) {
             $data = ARRAY(
                 'Error'   => REST_Controller::HTTP_NOT_FOUND,
