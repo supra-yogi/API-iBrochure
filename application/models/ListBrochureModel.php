@@ -75,7 +75,7 @@ class ListbrochureModel extends CI_Model {
         
         $query = $this->db->query('SELECT lb.*, u.Id as UseraccountId, u.Name as Username, u.Picture as Avatar, c.Name as Category 
                                    FROM list_brochure lb
-                                   RIGHT JOIN user_account u on u.Id = lb.UseraccountId
+                                   LEFT JOIN user_account u on u.Id = lb.UseraccountId
                                    LEFT JOIN category c ON c.Id = lb.CategoryId 
                                    WHERE u.Id = '.$id.
                                    ' ORDER BY PostingDate DESC'.
